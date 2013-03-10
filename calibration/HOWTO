@@ -1,0 +1,6 @@
+
+gengrid.rb :
+
+Reads calib.svg.template, outputs the desired grids/checkerboards in calib.svg.
+
+Then, you can use inkscape to convert the svg file to pdf.
