@@ -1,0 +1,28 @@
+For a single image
+==================
+tca_correct -o abcv P1160594.JPG
+
+then correct the image:
+
+fulla -r -0.004630:0.017748:-0.019817:0.997139 -b 0.000796:-0.002948:0.004162:1.006911 P1160594.JPG
+
+To obtain parameters from a series of images
+============================================
+
+ls *.JPG | xargs -I{} tca_correct -o abcv {} | tee params.log
+
+# ruby parse.rb > params.db
+
+# R -f analyse.R
+=> Outputs median fulla parameters
+   Creates params.pdf with a boxplot of the parameters
+
+
+To correct a group of images
+============================
+
+ls *.JPG | xargs -I{} fulla -r -0.004630:0.017748:-0.019817:0.997139 -b 0.000796:-0.002948:0.004162:1.006911 {}
+
+# fulla doesn't keep EXIF, you can recover it by doing this
+ls *_corr.JPG | ruby -ne 'm = $_.match(/(.*)_corr(.*)/); system "exiftool -all= -tagsfromfile #{m[1]}#{m[2]} -exif:all #{m[0]}"'
+
